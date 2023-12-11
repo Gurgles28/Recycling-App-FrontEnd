@@ -1,9 +1,11 @@
-
 import React from "react";
-
+import Header from "./components/Header";
+import LoginRegistration from "./components/LoginRegistration/LoginRegistration";
 function App() {
   return (
-    <div >this is it
+    <div>
+      <Header />
+      <LoginRegistration />
     </div>
   );
 }
