@@ -1,9 +1,12 @@
 import React from "react";
+import ButtonAppBar from "./AppBar/ButtonAppBar";
+import "./Home.css";
 
 function Home() {
   return (
     <div>
-      <h1>Home</h1>
+      <ButtonAppBar />
+      <h1>Welcome to MSG Recycling App</h1>
     </div>
   );
 }
