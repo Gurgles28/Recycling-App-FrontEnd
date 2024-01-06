@@ -18,6 +18,7 @@ import Label from "./DropDownMenuComponents/Label";
 import InputWrapper from "./DropDownMenuComponents/InputWrapper";
 import StyledTag from "./DropDownMenuComponents/StyledTag";
 import Listbox from "./DropDownMenuComponents/Listbox";
+import Button from "@mui/material/Button";
 
 function RecyclingCenters() {
   const rows = [
@@ -69,7 +70,6 @@ function RecyclingCenters() {
   ];
 
   const [query, setQuery] = useState("");
-
   const {
     getRootProps,
     getInputLabelProps,
@@ -87,6 +87,16 @@ function RecyclingCenters() {
     options: materials,
     getOptionLabel: (option) => option.material,
   });
+
+  const filteredRows = rows
+    .filter(
+      (asd) =>
+        asd.name.toLowerCase().includes(query) ||
+        asd.location.toLowerCase().includes(query) ||
+        asd.materials.toLowerCase().includes(query) ||
+        asd.hours.toLowerCase().includes(query)
+    )
+    .filter((asd) => value.every((str) => str.includes(asd.materials)));
 
   return (
     <div className="app">
@@ -134,32 +144,29 @@ function RecyclingCenters() {
           placeholder="Search..."
           onChange={(e) => setQuery(e.target.value.toLowerCase())}
         />
+        <Button
+          variant="text"
+          color="inherit"
+          onClick={() => window.location.reload(false)}
+        >
+          Reset
+        </Button>
       </Box>
 
       <TableContainer className="tablecontainer" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>NAME</TableCell>
-              <TableCell align="right">LOCATION</TableCell>
-              <TableCell align="right">MATERIAL</TableCell>
-              <TableCell align="right">OPEN HOURS</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .filter(
-                (asd) =>
-                  asd.name.toLowerCase().includes(query) ||
-                  asd.location.toLowerCase().includes(query) ||
-                  asd.materials.toLowerCase().includes(query) ||
-                  asd.hours.toLowerCase().includes(query)
-              )
-              .filter((asd) =>
-                value.every((str) => str.includes(asd.materials))
-              )
-
-              .map((row) => (
+        {filteredRows.length > 0 ? (
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>NAME</TableCell>
+                <TableCell align="right">LOCATION</TableCell>
+                <TableCell align="right">MATERIAL</TableCell>
+                <TableCell align="right">OPEN HOURS</TableCell>
+              </TableRow>
+              s
+            </TableHead>
+            <TableBody>
+              {filteredRows.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -172,8 +179,11 @@ function RecyclingCenters() {
                   <TableCell align="right">{row.hours}</TableCell>
                 </TableRow>
               ))}
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
+        ) : (
+          <p align="center">No Recycling Centers Available</p>
+        )}
       </TableContainer>
     </div>
   );

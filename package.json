@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@findify/sdk": "^2.5.12",
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.3",
     "@testing-library/jest-dom": "^5.17.0",
@@ -40,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "^6.21.1"
+    "react-router-dom": "^6.21.1",
+    "terser-brunch": "^4.1.0"
   }
 }
