@@ -32,19 +32,19 @@ function RecyclingCenters() {
       name: "Center B",
       location: "Location B",
       materials: "Glass",
-      hours: "9 AM - 6 PM",
+      hours: "8 AM - 6 PM",
     },
     {
       name: "Center C",
       location: "Location C",
       materials: "Aluminum",
-      hours: "9 AM - 7 PM",
+      hours: "11 AM - 7 PM",
     },
     {
       name: "Center D",
       location: "Location D",
       materials: "Metal",
-      hours: "8 AM - 8 PM",
+      hours: "11 AM - 10 PM",
     },
     {
       name: "Center E",
@@ -70,6 +70,8 @@ function RecyclingCenters() {
   ];
 
   const [query, setQuery] = useState("");
+  const [sorting, setSorting] = useState({ column: null, order: "desc" });
+
   const {
     getRootProps,
     getInputLabelProps,
@@ -88,6 +90,16 @@ function RecyclingCenters() {
     getOptionLabel: (option) => option.material,
   });
 
+  const handleSort = (column) => {
+    setSorting((prevSorting) => ({
+      column,
+      order:
+        prevSorting.column === column && prevSorting.order === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  };
+
   const filteredRows = rows
     .filter(
       (asd) =>
@@ -96,7 +108,11 @@ function RecyclingCenters() {
         asd.materials.toLowerCase().includes(query) ||
         asd.hours.toLowerCase().includes(query)
     )
-    .filter((asd) => value.every((str) => str.includes(asd.materials)));
+    .filter((asd) => value.every((str) => str.includes(asd.materials)))
+    .sort((a, b) => {
+      const compareValue = a[sorting.column] > b[sorting.column] ? 1 : -1;
+      return sorting.order === "asc" ? compareValue : compareValue * -1;
+    });
 
   return (
     <div className="app">
@@ -158,12 +174,43 @@ function RecyclingCenters() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>NAME</TableCell>
-                <TableCell align="right">LOCATION</TableCell>
-                <TableCell align="right">MATERIAL</TableCell>
-                <TableCell align="right">OPEN HOURS</TableCell>
+                <TableCell>
+                  <Button
+                    variant="text"
+                    color="inherit"
+                    onClick={() => handleSort("name")}
+                  >
+                    Name
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="text"
+                    color="inherit"
+                    onClick={() => handleSort("location")}
+                  >
+                    Location
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="text"
+                    color="inherit"
+                    onClick={() => handleSort("materials")}
+                  >
+                    material
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="text"
+                    color="inherit"
+                    onClick={() => handleSort("hours")}
+                  >
+                    Open Hours
+                  </Button>
+                </TableCell>
               </TableRow>
-              s
             </TableHead>
             <TableBody>
               {filteredRows.map((row) => (

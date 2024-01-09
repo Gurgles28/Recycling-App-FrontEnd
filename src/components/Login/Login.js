@@ -1,41 +1,26 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthData } from "../../components/AuthWrapper";
 import axios from "axios";
 
 function Login() {
+  const navigate = useNavigate();
+  const { login } = AuthData();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [formData, setFormData] = useReducer(
+    (formData, newItem) => {
+      return { ...formData, ...newItem };
+    },
+    { email: "", password: "" }
+  );
 
-  async function login(event) {
-    event.preventDefault();
+  async function doLogin() {
     try {
-      await axios
-        .post("http://localhost:8080/api/v1/users/login", {
-          email: email,
-          password: password,
-        })
-        .then(
-          (res) => {
-            console.log(res.data);
-
-            if (res.data.message === "Email not exits") {
-              alert("Email not exits");
-            } else if (res.data.message === "Login Success") {
-              navigate("/home");
-            } else {
-              alert("Incorrect Email and Password not match");
-            }
-          },
-          (fail) => {
-            console.error(fail); // Error!
-          }
-        );
-    } catch (err) {
-      alert(err);
-    }
+      await login(formData.email, formData.password);
+      navigate("/home");
+    } catch (error) {}
   }
-
   return (
     <div className="container">
       <div className="header">
@@ -47,10 +32,8 @@ function Login() {
             type="email"
             placeholder="Email"
             id="email"
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
+            value={formData.email}
+            onChange={(e) => setFormData({ email: e.target.value })}
           />
         </div>
 
@@ -59,15 +42,13 @@ function Login() {
             type="password"
             placeholder="Password"
             id="password"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
+            value={formData.password}
+            onChange={(e) => setFormData({ password: e.target.value })}
           />
         </div>
       </div>
       <div className="submit-container">
-        <button className="submit" onClick={login}>
+        <button className="submit" onClick={doLogin}>
           Login
         </button>
       </div>
