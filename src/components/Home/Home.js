@@ -10,7 +10,6 @@ function Home() {
     <div>
       <ButtonAppBar />
       <h1>Welcome to MSG Recycling App</h1>
-      {loggedUserRole}
     </div>
   );
 }

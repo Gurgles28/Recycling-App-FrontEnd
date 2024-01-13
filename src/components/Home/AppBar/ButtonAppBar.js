@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import "./ButtonAppBar.css";
 import { Link } from "react-router-dom";
 import { AuthData } from "../../AuthWrapper";
+import AccountMenu from "./AccountMenu";
 
 export default function ButtonAppBar() {
   const logout = AuthData();
@@ -24,16 +25,7 @@ export default function ButtonAppBar() {
               Recycling Centers
             </Button>
           </Link>
-          <Link className="linklogout" to="http://localhost:3000/login">
-            <Button
-              className="logout"
-              variant="outlined"
-              color="inherit"
-              onClick={logout}
-            >
-              Log Out
-            </Button>
-          </Link>
+          <AccountMenu />
         </Toolbar>
       </AppBar>
     </Box>
