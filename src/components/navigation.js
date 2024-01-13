@@ -2,6 +2,7 @@ import Home from "./Home/Home";
 import Register from "./Register/Register";
 import Login from "./Login/Login";
 import RecyclingCenters from "./Home/RecyclingCenters/RecyclingCenters";
+import CreateRecyclingCenters from "./Home/RecyclingCenters/CreateRecyclingCenters/CreateRecyclingCenters";
 
 export const nav = [
   {
@@ -18,14 +19,20 @@ export const nav = [
   },
   {
     path: "/login",
-    name: "Home",
+    name: "Login",
     element: <Login />,
     isPrivate: false,
   },
   {
     path: "/RecyclingCenters",
-    name: "Home",
+    name: "RecyclingCenters",
     element: <RecyclingCenters />,
+    isPrivate: true,
+  },
+  {
+    path: "/CreateRecyclingCenters",
+    name: "CreateRecyclingCenters",
+    element: <CreateRecyclingCenters />,
     isPrivate: true,
   },
 ];

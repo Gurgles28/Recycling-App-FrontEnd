@@ -75,6 +75,18 @@ export default function AccountMenu() {
         <MenuItem onClick={handleClose}>Email: {user.email}</MenuItem>
         <MenuItem onClick={handleClose}>Role: {loggedUserRole}</MenuItem>
         <Divider />
+
+        {loggedUserRole.map((child) =>
+          child.props.children === "admin" ? (
+            <MenuItem>
+              <Link to="http://localhost:3000/CreateRecyclingCenters">
+                <Button variant="text" color="error">
+                  Create Center
+                </Button>
+              </Link>
+            </MenuItem>
+          ) : null
+        )}
         <MenuItem onClick={logout}>
           <Link to="http://localhost:3000/login">
             <Button variant="text" color="error">

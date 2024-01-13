@@ -1,12 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthData } from "../../components/AuthWrapper";
 
 function Login() {
   const navigate = useNavigate();
   const { login } = AuthData();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [formData, setFormData] = useReducer(
     (formData, newItem) => {
       return { ...formData, ...newItem };

@@ -5,12 +5,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import "./ButtonAppBar.css";
 import { Link } from "react-router-dom";
-import { AuthData } from "../../AuthWrapper";
 import AccountMenu from "./AccountMenu";
 
 export default function ButtonAppBar() {
-  const logout = AuthData();
-
   return (
     <Box color="default" className="box" sx={{ bgcolor: `primary.light` }}>
       <AppBar color="error" position="static">

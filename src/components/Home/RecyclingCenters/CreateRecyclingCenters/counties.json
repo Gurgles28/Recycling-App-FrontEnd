@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "county": "County A",
+    "cities": [
+      { "name": "City A1" },
+      { "name": "City A2" },
+      { "name": "City A3" }
+    ]
+  },
+  {
+    "id": 2,
+    "county": "County B",
+    "cities": [
+      { "name": "City B1" },
+      { "name": "City B2" },
+      { "name": "City B3" }
+    ]
+  }
+]

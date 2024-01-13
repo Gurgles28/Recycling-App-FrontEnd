@@ -1,38 +1,44 @@
 [
   {
+    "id": 1,
     "name": "Center A",
     "location": "Location A",
-    "materials": "Plastic",
+    "materials": ["Plastic"],
     "hours": "8 AM - 5 PM"
   },
   {
+    "id": 2,
     "name": "Center B",
     "location": "Location B",
-    "materials": "Glass",
+    "materials": ["Glass"],
     "hours": "8 AM - 6 PM"
   },
   {
+    "id": 3,
     "name": "Center C",
     "location": "Location C",
-    "materials": "Aluminum",
+    "materials": ["Aluminum"],
     "hours": "11 AM - 7 PM"
   },
   {
+    "id": 4,
     "name": "Center D",
     "location": "Location D",
-    "materials": "Metal",
+    "materials": ["Metal"],
     "hours": "11 AM - 10 PM"
   },
   {
+    "id": 5,
     "name": "Center E",
     "location": "Location E",
-    "materials": "Paper & Cardboard",
+    "materials": ["Paper & Cardboard"],
     "hours": "10 AM - 9 PM"
   },
   {
+    "id": 6,
     "name": "Center F",
     "location": "Location F",
-    "materials": "Electronic Waste",
+    "materials": ["Electronic Waste"],
     "hours": "10 AM - 5 PM"
   }
 ]

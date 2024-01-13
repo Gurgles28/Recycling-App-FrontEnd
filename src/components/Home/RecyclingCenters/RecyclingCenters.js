@@ -67,7 +67,9 @@ function RecyclingCenters() {
       (asd) =>
         asd.name.toLowerCase().includes(query) ||
         asd.location.toLowerCase().includes(query) ||
-        asd.materials.toLowerCase().includes(query) ||
+        asd.materials.some((material) =>
+          material.toLowerCase().includes(query)
+        ) ||
         asd.hours.toLowerCase().includes(query)
     )
     .filter((asd) => value.every((str) => str.includes(asd.materials)))
