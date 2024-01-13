@@ -1,16 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { RenderRoutes } from "./RenderRoutes";
 import axios from "axios";
 
 const AuthContext = createContext();
+
 export const AuthData = () => useContext(AuthContext);
 
 export const AuthWrapper = () => {
-  const [user, setUser] = useState({ email: "", isAuthenticated: false });
-  const login = (email, password) => {
-    // Make a call to the authentication API to check the username
+  const [user, setUser] = useState({
+    email: "",
+    role: "",
+    isAuthenticated: false,
+  });
 
-    return new Promise((resolve, reject) => {
+  const login = (email, password) => {
+    return new Promise((resolve) => {
       try {
         axios
           .post("http://localhost:8080/api/v1/users/login", {
@@ -31,7 +35,7 @@ export const AuthWrapper = () => {
               }
             },
             (fail) => {
-              console.error(fail); // Error!
+              console.error(fail);
             }
           );
       } catch (err) {
@@ -39,11 +43,44 @@ export const AuthWrapper = () => {
       }
     });
   };
+
   const logout = () => {
     setUser({ ...user, isAuthenticated: false });
   };
+
+  const [allUsers, setAllUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/v1/users/getAll", { method: "POST" })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((result) => {
+        // Ensure that result is an array and contains the necessary properties
+        if (Array.isArray(result) && result.length > 0 && result[0].email) {
+          setAllUsers(result);
+        } else {
+          console.error("Invalid data format:", result);
+        }
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  }, []);
+
+  const loggedUser = allUsers.filter(
+    (allusers) => allusers.email === user.email
+  );
+
+  const loggedUserRole = loggedUser.map((loggeduser) => (
+    <p>{loggeduser.role}</p>
+  ));
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loggedUserRole }}>
       <>
         <RenderRoutes />
       </>

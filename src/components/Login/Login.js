@@ -1,7 +1,6 @@
 import React, { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthData } from "../../components/AuthWrapper";
-import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();

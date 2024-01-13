@@ -19,47 +19,9 @@ import InputWrapper from "./DropDownMenuComponents/InputWrapper";
 import StyledTag from "./DropDownMenuComponents/StyledTag";
 import Listbox from "./DropDownMenuComponents/Listbox";
 import Button from "@mui/material/Button";
+import rows from "./rows.json";
 
 function RecyclingCenters() {
-  const rows = [
-    {
-      name: "Center A",
-      location: "Location A",
-      materials: "Plastic",
-      hours: "8 AM - 5 PM",
-    },
-    {
-      name: "Center B",
-      location: "Location B",
-      materials: "Glass",
-      hours: "8 AM - 6 PM",
-    },
-    {
-      name: "Center C",
-      location: "Location C",
-      materials: "Aluminum",
-      hours: "11 AM - 7 PM",
-    },
-    {
-      name: "Center D",
-      location: "Location D",
-      materials: "Metal",
-      hours: "11 AM - 10 PM",
-    },
-    {
-      name: "Center E",
-      location: "Location E",
-      materials: "Paper & Cardboard",
-      hours: "10 AM - 9 PM",
-    },
-    {
-      name: "Center F",
-      location: "Location F",
-      materials: "Electronic Waste",
-      hours: "10 AM - 5 PM",
-    },
-  ];
-
   const materials = [
     "Plastic",
     "Glass",
@@ -149,7 +111,6 @@ function RecyclingCenters() {
             </Listbox>
           ) : null}
         </Root>
-
         <TextField
           id="standard-basic"
           label="Search"
