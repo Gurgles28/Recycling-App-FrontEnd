@@ -119,7 +119,6 @@ const CreateRecyclingCenters = () => {
                 value={city}
                 label="City"
                 onChange={handleChangeCity}
-                placeholder="Select County First"
               >
                 {counties
                   .find((item) => item.county === county)

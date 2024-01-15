@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ButtonAppBar from "../AppBar/ButtonAppBar";
-import "./RecyclingCenters.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,46 +10,20 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import * as React from "react";
-import { useAutocomplete } from "@mui/base/useAutocomplete";
-import CheckIcon from "@mui/icons-material/Check";
-import Root from "./DropDownMenuComponents/Root";
-import Label from "./DropDownMenuComponents/Label";
-import InputWrapper from "./DropDownMenuComponents/InputWrapper";
-import StyledTag from "./DropDownMenuComponents/StyledTag";
-import Listbox from "./DropDownMenuComponents/Listbox";
 import Button from "@mui/material/Button";
-import rows from "./rows.json";
+import { AuthData } from "../../AuthWrapper";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 
 function RecyclingCenters() {
-  const materials = [
-    "Plastic",
-    "Glass",
-    "Aluminum",
-    "Metal",
-    "Paper & Cardboard",
-    "Electronic Waste",
-  ];
-
+  const { allCenters } = AuthData();
   const [query, setQuery] = useState("");
   const [sorting, setSorting] = useState({ column: null, order: "desc" });
-
-  const {
-    getRootProps,
-    getInputLabelProps,
-    getInputProps,
-    getTagProps,
-    getListboxProps,
-    getOptionProps,
-    groupedOptions,
-    value,
-    focused,
-    setAnchorEl,
-  } = useAutocomplete({
-    id: "customized-hook-demo",
-    multiple: true,
-    options: materials,
-    getOptionLabel: (option) => option.material,
-  });
 
   const handleSort = (column) => {
     setSorting((prevSorting) => ({
@@ -62,22 +35,70 @@ function RecyclingCenters() {
     }));
   };
 
-  const filteredRows = rows
+  const handleReset = () => {
+    setQuery("");
+    setSorting({ column: null, order: "desc" });
+    setMaterialName([]);
+  };
+
+  const handleChangeMaterial = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMaterialName(typeof value === "string" ? value.split(",") : value);
+  };
+  const [materialName, setMaterialName] = React.useState([]);
+
+  const materialsForm = [
+    "Plastic",
+    "Glass",
+    "Aluminum",
+    "Metal",
+    "Paper & Cardboard",
+    "Electronic Waste",
+  ];
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  const valueQuery = (str) => str.toLowerCase().includes(query);
+  const filteredCenters = allCenters
     .filter(
-      (asd) =>
-        asd.name.toLowerCase().includes(query) ||
-        asd.location.toLowerCase().includes(query) ||
-        asd.materials.some((material) =>
-          material.toLowerCase().includes(query)
-        ) ||
-        asd.hours.toLowerCase().includes(query)
+      (center) =>
+        center.name.toLowerCase().includes(query) ||
+        center.city.toLowerCase().includes(query) ||
+        center.county.toLowerCase().includes(query) ||
+        center.centerAddress.toLowerCase().includes(query) ||
+        (center.materials &&
+          (Array.isArray(center.materials)
+            ? center.materials.some(valueQuery)
+            : center.materials.split(",").some(valueQuery))) ||
+        center.hours.toLowerCase().includes(query)
     )
-    .filter((asd) => value.every((str) => str.includes(asd.materials)))
+    .filter(
+      (center) =>
+        materialName.length === 0 ||
+        (center.materials &&
+          materialName.every((str) =>
+            center.materials
+              .split(",")
+              .some((material) =>
+                material.toLowerCase().includes(str.toLowerCase())
+              )
+          ))
+    )
     .sort((a, b) => {
       const compareValue = a[sorting.column] > b[sorting.column] ? 1 : -1;
       return sorting.order === "asc" ? compareValue : compareValue * -1;
     });
-
+  console.log(materialName);
   return (
     <div className="app">
       <ButtonAppBar />
@@ -89,30 +110,26 @@ function RecyclingCenters() {
           "& > :not(style)": { m: 3 },
         }}
       >
-        <Root>
-          <div {...getRootProps()}>
-            <Label {...getInputLabelProps()}>Filter Materials</Label>
-            <InputWrapper
-              ref={setAnchorEl}
-              className={focused ? "focused" : ""}
-            >
-              {value.map((option, index) => (
-                <StyledTag label={option} {...getTagProps({ index })} />
-              ))}
-              <input {...getInputProps()} />
-            </InputWrapper>
-          </div>
-          {groupedOptions.length > 0 ? (
-            <Listbox {...getListboxProps()}>
-              {groupedOptions.map((option, index) => (
-                <li {...getOptionProps({ option, index })}>
-                  <span>{option}</span>
-                  <CheckIcon fontSize="small" />
-                </li>
-              ))}
-            </Listbox>
-          ) : null}
-        </Root>
+        <FormControl sx={{ m: 1.5, width: 500 }}>
+          <InputLabel id="demo-multiple-checkbox-label">Materials</InputLabel>
+          <Select
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            multiple
+            value={materialName}
+            onChange={handleChangeMaterial}
+            input={<OutlinedInput label="Tag" />}
+            renderValue={(selected) => selected.join(", ")}
+            MenuProps={MenuProps}
+          >
+            {materialsForm.map((name) => (
+              <MenuItem key={name} value={name}>
+                <Checkbox checked={materialName.indexOf(name) > -1} />
+                <ListItemText primary={name} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <TextField
           id="standard-basic"
           label="Search"
@@ -121,19 +138,16 @@ function RecyclingCenters() {
           variant="standard"
           className="search"
           placeholder="Search..."
+          value={query}
           onChange={(e) => setQuery(e.target.value.toLowerCase())}
         />
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => window.location.reload(false)}
-        >
+        <Button variant="text" color="inherit" onClick={handleReset}>
           Reset
         </Button>
       </Box>
 
       <TableContainer className="tablecontainer" component={Paper}>
-        {filteredRows.length > 0 ? (
+        {filteredCenters.length > 0 ? (
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -161,7 +175,7 @@ function RecyclingCenters() {
                     color="inherit"
                     onClick={() => handleSort("materials")}
                   >
-                    material
+                    materials
                   </Button>
                 </TableCell>
                 <TableCell align="right">
@@ -176,7 +190,7 @@ function RecyclingCenters() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredRows.map((row) => (
+              {filteredCenters.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -184,7 +198,7 @@ function RecyclingCenters() {
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
-                  <TableCell align="right">{row.location}</TableCell>
+                  <TableCell align="right">{`${row.county}, ${row.city}, ${row.centerAddress}`}</TableCell>
                   <TableCell align="right">{row.materials}</TableCell>
                   <TableCell align="right">{row.hours}</TableCell>
                 </TableRow>

@@ -72,8 +72,12 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>Email: {user.email}</MenuItem>
-        <MenuItem onClick={handleClose}>Role: {loggedUserRole}</MenuItem>
+        <MenuItem key={user.email} onClick={handleClose}>
+          Email: {user.email}
+        </MenuItem>
+        <MenuItem key={loggedUserRole} onClick={handleClose}>
+          Role: {loggedUserRole}
+        </MenuItem>
         <Divider />
 
         {loggedUserRole.map((child) =>

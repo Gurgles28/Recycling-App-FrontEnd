@@ -59,7 +59,6 @@ export const AuthWrapper = () => {
         return res.json();
       })
       .then((result) => {
-        // Ensure that result is an array and contains the necessary properties
         if (Array.isArray(result) && result.length > 0 && result[0].email) {
           setAllUsers(result);
         } else {
@@ -68,6 +67,25 @@ export const AuthWrapper = () => {
       })
       .catch((error) => {
         console.error("Fetch error:", error);
+      });
+  }, []);
+
+  const [allCenters, setAllCenters] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/v1/centers/getAllCenters", {
+      method: "POST",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((result) => {
+        if (Array.isArray(result) && result.length > 0) {
+          setAllCenters(result);
+        }
       });
   }, []);
 
@@ -80,7 +98,9 @@ export const AuthWrapper = () => {
   ));
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loggedUserRole }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, loggedUserRole, allCenters }}
+    >
       <>
         <RenderRoutes />
       </>
