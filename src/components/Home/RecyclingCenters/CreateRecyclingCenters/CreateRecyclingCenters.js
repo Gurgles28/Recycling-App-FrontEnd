@@ -13,37 +13,15 @@ import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 const CreateRecyclingCenters = () => {
   const [county, setCounty] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [materialsToRecycle, setMaterialsToRecycle] = useState([]);
-  const [centerName, setCenterName] = useState("");
-  const [workingHours, setWorkingHours] = useState("");
-
-  const handleSave = () => {
-    if (
-      !county ||
-      !city ||
-      !address ||
-      materialsToRecycle.length === 0 ||
-      !centerName ||
-      !workingHours
-    ) {
-      alert("All fields are mandatory. Please fill them out.");
-      return;
-    }
-  };
-
-  const newCenter = {
-    county,
-    city,
-    address,
-    materialsToRecycle,
-    centerName,
-    workingHours,
-  };
+  const [name, setName] = useState("");
+  const [hours, setHours] = useState("");
+  const [materialName, setMaterialName] = useState([]);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -65,22 +43,34 @@ const CreateRecyclingCenters = () => {
     "Electronic Waste",
   ];
 
-  const handleChangeCounty = (event) => {
-    setCounty(event.target.value);
-  };
-
-  const handleChangeCity = (event) => {
-    setCity(event.target.value);
-  };
-
   const handleChangeMaterial = (event) => {
     const {
       target: { value },
     } = event;
     setMaterialName(typeof value === "string" ? value.split(",") : value);
+    console.log("Material Name: ", materialName);
   };
 
-  const [materialName, setMaterialName] = React.useState([]);
+  const materials = materialName.join(", ");
+
+  async function saveCenter(event) {
+    event.preventDefault();
+    try {
+      await axios
+        .post("http://localhost:8080/api/v1/centers/saveCenter", {
+          centerAddress: address,
+          city: city,
+          county: county,
+          hours: hours,
+          materials: materials,
+          name: name,
+        })
+        .then((res) => {});
+      alert("Center Created Successfully");
+    } catch (err) {
+      alert(err);
+    }
+  }
 
   return (
     <div>
@@ -102,7 +92,7 @@ const CreateRecyclingCenters = () => {
                 id="county-select"
                 value={county}
                 label="County"
-                onChange={handleChangeCounty}
+                onChange={(e) => setCounty(e.target.value)}
               >
                 {counties.map((county) => (
                   <MenuItem key={county.id} value={county.county}>
@@ -118,7 +108,7 @@ const CreateRecyclingCenters = () => {
                 id="city-select"
                 value={city}
                 label="City"
-                onChange={handleChangeCity}
+                onChange={(e) => setCity(e.target.value)}
               >
                 {counties
                   .find((item) => item.county === county)
@@ -134,6 +124,7 @@ const CreateRecyclingCenters = () => {
               id="outlined-basic"
               label="Address"
               variant="outlined"
+              onChange={(e) => setAddress(e.target.value)}
             />
             <FormControl sx={{ m: 1.5, width: 385 }}>
               <InputLabel id="demo-multiple-checkbox-label">
@@ -162,22 +153,21 @@ const CreateRecyclingCenters = () => {
               id="centerName"
               label="Center Name"
               variant="outlined"
-              fullWidth
-              onChange={(e) => setCenterName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
             <TextField
               sx={{ m: 1.5, width: 385 }}
               id="workingHours"
               label="Working Hours"
               variant="outlined"
-              fullWidth
-              onChange={(e) => setWorkingHours(e.target.value)}
+              onChange={(e) => setHours(e.target.value)}
             />
 
             <Button
               sx={{ m: 4.8, width: 330 }}
               variant="outlined"
               color="inherit"
+              onClick={saveCenter}
             >
               Save
             </Button>

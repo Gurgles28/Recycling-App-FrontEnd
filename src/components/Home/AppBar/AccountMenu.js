@@ -76,7 +76,10 @@ export default function AccountMenu() {
           Email: {user.email}
         </MenuItem>
         <MenuItem key={loggedUserRole} onClick={handleClose}>
-          Role: {loggedUserRole}
+          Role:{" "}
+          {loggedUserRole.map((child) =>
+            child.props.children === "admin" ? loggedUserRole : "client"
+          )}
         </MenuItem>
         <Divider />
 
