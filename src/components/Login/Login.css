@@ -76,3 +76,10 @@
   background-color: #e6e5e5;
   color: #676666;
 }
+
+.linkLogin {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 48px;
+  font-weight: 700;
+  align-items: center;
+}

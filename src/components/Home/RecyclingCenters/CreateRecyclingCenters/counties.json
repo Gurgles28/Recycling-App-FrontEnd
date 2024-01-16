@@ -1,6 +1,42 @@
 [
   {
     "id": 1,
+    "county": "County A",
+    "cities": [
+      { "name": "City A1" },
+      { "name": "City A2" },
+      { "name": "City A3" }
+    ]
+  },
+  {
+    "id": 2,
+    "county": "County B",
+    "cities": [
+      { "name": "City B1" },
+      { "name": "City B2" },
+      { "name": "City B3" }
+    ]
+  },
+  {
+    "id": 3,
+    "county": "County C",
+    "cities": [
+      { "name": "City C1" },
+      { "name": "City C2" },
+      { "name": "City C3" }
+    ]
+  },
+  {
+    "id": 4,
+    "county": "County D",
+    "cities": [
+      { "name": "City D1" },
+      { "name": "City D2" },
+      { "name": "City D3" }
+    ]
+  },
+  {
+    "id": 5,
     "county": "County F",
     "cities": [
       { "name": "City F1" },
@@ -9,7 +45,7 @@
     ]
   },
   {
-    "id": 2,
+    "id": 6,
     "county": "County G",
     "cities": [
       { "name": "City G1" },

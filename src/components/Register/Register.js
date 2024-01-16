@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [userFirstName, setFirstName] = useState("");
@@ -99,6 +100,9 @@ function Register() {
         <button className="submit" onClick={saveUser}>
           Register
         </button>
+        <Link to="/login" style={{ textDecoration: "none" }}>
+          <button className="submit">Sign In</button>
+        </Link>
       </div>
     </div>
   );

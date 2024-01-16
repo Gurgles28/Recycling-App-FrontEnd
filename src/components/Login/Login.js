@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthData } from "../../components/AuthWrapper";
-
+import { Link } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const { login } = AuthData();
@@ -48,6 +48,11 @@ function Login() {
         <button className="submit" onClick={doLogin}>
           Login
         </button>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <button className="submit" text-decoration="none">
+            Sign Up
+          </button>
+        </Link>
       </div>
     </div>
   );

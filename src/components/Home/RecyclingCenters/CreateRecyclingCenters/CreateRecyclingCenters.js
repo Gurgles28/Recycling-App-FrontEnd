@@ -56,16 +56,15 @@ const CreateRecyclingCenters = () => {
   async function saveCenter(event) {
     event.preventDefault();
     try {
-      await axios
-        .post("http://localhost:8080/api/v1/centers/saveCenter", {
-          centerAddress: address,
-          city: city,
-          county: county,
-          hours: hours,
-          materials: materials,
-          name: name,
-        })
-        .then((res) => {});
+      await axios.post("http://localhost:8080/api/v1/centers/saveCenter", {
+        centerAddress: address,
+        city: city,
+        county: county,
+        hours: hours,
+        materials: materials,
+        name: name,
+      });
+
       alert("Center Created Successfully");
     } catch (err) {
       alert(err);
