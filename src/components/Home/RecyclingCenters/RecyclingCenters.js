@@ -19,11 +19,14 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function RecyclingCenters() {
   const { allCenters } = AuthData();
   const [query, setQuery] = useState("");
   const [sorting, setSorting] = useState({ column: null, order: "desc" });
+  const navigate = useNavigate();
 
   const handleSort = (column) => {
     setSorting((prevSorting) => ({
@@ -48,6 +51,14 @@ function RecyclingCenters() {
     setMaterialName(typeof value === "string" ? value.split(",") : value);
   };
   const [materialName, setMaterialName] = React.useState([]);
+
+  useEffect(() => {
+    if (materialName.length > 0) {
+      navigate("/RecyclingTracking", {
+        state: { materials: materialName.join(", ") },
+      });
+    }
+  }, [materialName, navigate]);
 
   const materialsForm = [
     "Plastic",
@@ -99,7 +110,7 @@ function RecyclingCenters() {
       const compareValue = a[sorting.column] > b[sorting.column] ? 1 : -1;
       return sorting.order === "asc" ? compareValue : compareValue * -1;
     });
-  console.log(materialName);
+
   return (
     <div className="app">
       <ButtonAppBar />
@@ -190,26 +201,36 @@ function RecyclingCenters() {
                 </TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
               {filteredCenters.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  onClick={() =>
+                    navigate("/RecyclingTracking", {
+                      state: { tableRowMats: row.materials },
+                    })
+                  }
                 >
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
                   <TableCell align="right">{`${row.county}, ${row.city}, ${row.centerAddress}`}</TableCell>
-                  <TableCell align="right">{row.materials}</TableCell>
+                  <TableCell value={row.materials} align="right">
+                    {row.materials}
+                  </TableCell>
+
                   <TableCell align="right">{row.hours}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         ) : (
-          <p align="center">No Recycling Centers Available</p>
+          <h3 align="center">No Recycling Centers Available</h3>
         )}
       </TableContainer>
+      <h3 align="center">Click Recycling Center to recycle materials</h3>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Register from "./Register/Register";
 import Login from "./Login/Login";
 import RecyclingCenters from "./Home/RecyclingCenters/RecyclingCenters";
 import CreateRecyclingCenters from "./Home/RecyclingCenters/CreateRecyclingCenters/CreateRecyclingCenters";
+import RecyclingTracking from "./Home/RecyclingCenters/RecyclingTracking/RecyclingTracking";
 
 export const nav = [
   {
@@ -33,6 +34,12 @@ export const nav = [
     path: "/CreateRecyclingCenters",
     name: "CreateRecyclingCenters",
     element: <CreateRecyclingCenters />,
+    isPrivate: true,
+  },
+  {
+    path: "/RecyclingTracking",
+    name: "RecyclingTracking",
+    element: <RecyclingTracking />,
     isPrivate: true,
   },
 ];
