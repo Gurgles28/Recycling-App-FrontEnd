@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { AuthData } from "../../AuthWrapper";
+import { AuthData } from "../../Routes&Navigation/AuthWrapper";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,7 +20,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 function RecyclingCenters() {
   const { allCenters } = AuthData();
@@ -51,14 +50,6 @@ function RecyclingCenters() {
     setMaterialName(typeof value === "string" ? value.split(",") : value);
   };
   const [materialName, setMaterialName] = React.useState([]);
-
-  useEffect(() => {
-    if (materialName.length > 0) {
-      navigate("/RecyclingTracking", {
-        state: { materials: materialName.join(", ") },
-      });
-    }
-  }, [materialName, navigate]);
 
   const materialsForm = [
     "Plastic",
@@ -230,7 +221,7 @@ function RecyclingCenters() {
           <h3 align="center">No Recycling Centers Available</h3>
         )}
       </TableContainer>
-      <h3 align="center">Click Recycling Center to recycle materials</h3>
+      <h3 align="center">Click a Recycling Center to recycle materials!</h3>
     </div>
   );
 }

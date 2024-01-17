@@ -1,7 +1,7 @@
 import React from "react";
 
 import Header from "./components/Header.js";
-import { AuthWrapper } from "./components/AuthWrapper.js";
+import { AuthWrapper } from "./components/Routes&Navigation/AuthWrapper.js";
 
 import { BrowserRouter } from "react-router-dom";
 

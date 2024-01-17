@@ -10,8 +10,11 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
+import { AuthData } from "../../../Routes&Navigation/AuthWrapper";
+import axios from "axios";
 
 const RecyclingTracking = () => {
+  const { user } = AuthData();
   const location = useLocation();
   const { tableRowMats } = location.state;
   const materialsArray = tableRowMats ? tableRowMats.split(", ") : [];
@@ -34,13 +37,28 @@ const RecyclingTracking = () => {
       return newStates;
     });
   };
-
-  const handleContribute = () => {
-    const overallTotalPoints = materialStates.reduce(
-      (total, materialState) =>
-        total + materialState.amount * materialState.unit,
-      0
-    );
+  console.log(user.email);
+  const handleContribute = async () => {
+    try {
+      const overallPoints = materialStates.reduce(
+        (total, materialState) =>
+          total + materialState.amount * materialState.unit,
+        0
+      );
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/users/updatePoints",
+        null,
+        {
+          params: {
+            email: user.email,
+            newPoints: overallPoints,
+          },
+        }
+      );
+      alert(response.data);
+    } catch (error) {
+      alert("Error:", error);
+    }
   };
 
   return (

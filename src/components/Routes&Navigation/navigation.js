@@ -1,9 +1,9 @@
-import Home from "./Home/Home";
-import Register from "./Register/Register";
-import Login from "./Login/Login";
-import RecyclingCenters from "./Home/RecyclingCenters/RecyclingCenters";
-import CreateRecyclingCenters from "./Home/RecyclingCenters/CreateRecyclingCenters/CreateRecyclingCenters";
-import RecyclingTracking from "./Home/RecyclingCenters/RecyclingTracking/RecyclingTracking";
+import Home from "../Home/Home";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import RecyclingCenters from "../Home/RecyclingCenters/RecyclingCenters";
+import CreateRecyclingCenters from "../Home/RecyclingCenters/CreateRecyclingCenters/CreateRecyclingCenters";
+import RecyclingTracking from "../Home/RecyclingCenters/RecyclingTracking/RecyclingTracking";
 
 export const nav = [
   {

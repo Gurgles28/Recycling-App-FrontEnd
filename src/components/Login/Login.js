@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthData } from "../../components/AuthWrapper";
+import { AuthData } from "../../components/Routes&Navigation/AuthWrapper";
 import { Link } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { AuthData } from "../../AuthWrapper";
+import { AuthData } from "../../Routes&Navigation/AuthWrapper";
 import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
