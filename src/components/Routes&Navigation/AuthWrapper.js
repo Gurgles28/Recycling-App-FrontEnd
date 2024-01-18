@@ -97,9 +97,20 @@ export const AuthWrapper = () => {
     <p>{loggeduser.role}</p>
   ));
 
+  const loggedUserPoints = loggedUser.map((loggeduser) => (
+    <p>{loggeduser.points}</p>
+  ));
+
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, loggedUserRole, allCenters }}
+      value={{
+        user,
+        login,
+        logout,
+        loggedUserRole,
+        loggedUserPoints,
+        allCenters,
+      }}
     >
       <>
         <RenderRoutes />

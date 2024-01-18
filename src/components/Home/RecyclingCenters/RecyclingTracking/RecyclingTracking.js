@@ -12,14 +12,35 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { AuthData } from "../../../Routes&Navigation/AuthWrapper";
 import axios from "axios";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const RecyclingTracking = () => {
   const { user } = AuthData();
   const location = useLocation();
   const { tableRowMats } = location.state;
   const materialsArray = tableRowMats ? tableRowMats.split(", ") : [];
+
+  const materialPointValues = {
+    Plastic: 5,
+    Aluminum: 10,
+    Metal: 15,
+    Glass: 8,
+    "Paper & Cardboard": 2,
+    "Electronic Waste": 20,
+  };
+
   const [materialStates, setMaterialStates] = useState(
-    materialsArray.map(() => ({ amount: 0, unit: 0 }))
+    materialsArray.map((material) => ({
+      material: material,
+      amount: 0,
+      unit: 0,
+    }))
   );
 
   const handleAmountChange = (index, value) => {
@@ -37,12 +58,16 @@ const RecyclingTracking = () => {
       return newStates;
     });
   };
-  console.log(user.email);
+
   const handleContribute = async () => {
     try {
       const overallPoints = materialStates.reduce(
         (total, materialState) =>
-          total + materialState.amount * materialState.unit,
+          total +
+          (materialState.amount *
+            materialState.unit *
+            materialPointValues[materialState.material]) /
+            5,
         0
       );
       const response = await axios.post(
@@ -56,15 +81,16 @@ const RecyclingTracking = () => {
         }
       );
       alert(response.data);
+      alert("");
     } catch (error) {
-      alert("Error:", error);
+      alert("Invalid Input. Numbers-Only");
     }
   };
 
   return (
     <div>
       <ButtonAppBar />
-      <div className="container">
+      <div className="containerC">
         {materialsArray.map((material, index) => (
           <Box
             component="form"
@@ -107,7 +133,10 @@ const RecyclingTracking = () => {
               <FormControl variant="standard" sx={{ m: 0.8, minWidth: 10 }}>
                 <h4>
                   Points:{" "}
-                  {materialStates[index].amount * materialStates[index].unit}
+                  {(materialStates[index].amount *
+                    materialStates[index].unit *
+                    materialPointValues[material]) /
+                    5}
                 </h4>
               </FormControl>
             </Container>
@@ -118,7 +147,11 @@ const RecyclingTracking = () => {
           Total Recycling Points:
           {materialStates.reduce(
             (total, materialState) =>
-              total + materialState.amount * materialState.unit,
+              total +
+              (materialState.amount *
+                materialState.unit *
+                materialPointValues[materialState.material]) /
+                5,
             0
           )}
         </h3>
@@ -130,6 +163,52 @@ const RecyclingTracking = () => {
         >
           Contribute
         </Button>
+      </div>
+      <div>
+        <TableContainer className="tablecontainer" component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {materialStates.map((item) => (
+                  <TableCell>{item.material} Contribution</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                {materialStates.map(() => (
+                  <TableCell component="th" scope="row">
+                    Contribution Points
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TableContainer className="tablecontainer" component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {materialStates.map((item) => (
+                  <TableCell>{item.material} Environmantal Impact</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                {materialStates.map(() => (
+                  <TableCell component="th" scope="row">
+                    Environmantal Impact
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </div>
   );

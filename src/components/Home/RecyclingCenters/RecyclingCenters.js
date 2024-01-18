@@ -148,6 +148,7 @@ function RecyclingCenters() {
           Reset
         </Button>
       </Box>
+      <h2>{"\n"}</h2>
 
       <TableContainer className="tablecontainer" component={Paper}>
         {filteredCenters.length > 0 ? (

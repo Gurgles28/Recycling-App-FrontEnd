@@ -8,6 +8,22 @@
   padding-bottom: auto;
 }
 
+.containerC {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 500px;
+  margin-right: 500px;
+  margin-top: auto;
+  margin-bottom: 30px;
+  background: #fff;
+  padding-bottom: auto;
+}
+
+.tablecontainer {
+  margin-top: 30px;
+}
+
 .text {
   font-family: "Courier New", Courier, monospace;
   color: #900000;

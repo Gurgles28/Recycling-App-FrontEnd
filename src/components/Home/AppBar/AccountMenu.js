@@ -19,7 +19,7 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { loggedUserRole, user, logout } = AuthData();
+  const { loggedUserRole, user, logout, loggedUserPoints } = AuthData();
 
   return (
     <React.Fragment>
@@ -73,13 +73,18 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem key={user.email} onClick={handleClose}>
-          Email: {user.email}
+          Email:
+          {user.email}
         </MenuItem>
         <MenuItem key={loggedUserRole} onClick={handleClose}>
-          Role:{" "}
+          Role:
           {loggedUserRole.map((child) =>
             child.props.children === "admin" ? loggedUserRole : "client"
           )}
+        </MenuItem>
+        <MenuItem key={loggedUserPoints} onClick={handleClose}>
+          Points:
+          {loggedUserPoints}
         </MenuItem>
         <Divider />
 
