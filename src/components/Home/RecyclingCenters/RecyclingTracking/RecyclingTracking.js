@@ -19,6 +19,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useEffect } from "react";
 
 const RecyclingTracking = () => {
   const { user } = AuthData();
@@ -67,7 +68,7 @@ const RecyclingTracking = () => {
           (materialState.amount *
             materialState.unit *
             materialPointValues[materialState.material]) /
-            5,
+            10,
         0
       );
       const response = await axios.post(
@@ -80,12 +81,48 @@ const RecyclingTracking = () => {
           },
         }
       );
+
       alert(response.data);
-      alert("");
+      console.log(materialStates);
+      for (const materialState of materialStates) {
+        await axios.post(
+          "http://localhost:8080/api/v1/users/updateContribPoints",
+          null,
+          {
+            params: {
+              email: user.email,
+              materialType: materialState.material,
+              recycledAmount:
+                (materialState.amount *
+                  materialState.unit *
+                  materialPointValues[materialState.material]) /
+                10,
+            },
+          }
+        );
+      }
+      alert("Material Contribution Updated");
     } catch (error) {
       alert("Invalid Input. Numbers-Only");
     }
   };
+
+  const [contribMaterials, setContribMaterials] = useState({});
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/v1/users/getContribMaterials", {
+        params: {
+          email: user.email,
+        },
+      })
+      .then((response) => {
+        setContribMaterials(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching contribution materials:", error);
+      });
+  }, [user.email]);
 
   return (
     <div>
@@ -102,7 +139,9 @@ const RecyclingTracking = () => {
             noValidate
             autoComplete="off"
           >
-            <h3>{material}</h3>
+            <h3>
+              {material} ({materialPointValues[material]} points per Piece)
+            </h3>
             <Container fixed>
               <TextField
                 sx={{ m: 0.5, width: 100 }}
@@ -136,7 +175,7 @@ const RecyclingTracking = () => {
                   {(materialStates[index].amount *
                     materialStates[index].unit *
                     materialPointValues[material]) /
-                    5}
+                    10}
                 </h4>
               </FormControl>
             </Container>
@@ -151,7 +190,7 @@ const RecyclingTracking = () => {
               (materialState.amount *
                 materialState.unit *
                 materialPointValues[materialState.material]) /
-                5,
+                10,
             0
           )}
         </h3>
@@ -178,9 +217,16 @@ const RecyclingTracking = () => {
               <TableRow
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {materialStates.map(() => (
-                  <TableCell component="th" scope="row">
-                    Contribution Points
+                {materialStates.map((materialState) => (
+                  <TableCell
+                    key={materialState.material}
+                    component="th"
+                    scope="row"
+                  >
+                    {contribMaterials[materialState.material] /
+                      materialPointValues[materialState.material] /
+                      10}
+                    kg
                   </TableCell>
                 ))}
               </TableRow>
