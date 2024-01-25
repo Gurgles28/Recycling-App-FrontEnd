@@ -1,56 +1,61 @@
 [
   {
     "id": 1,
-    "county": "County A",
+    "county": "Alba",
     "cities": [
-      { "name": "City A1" },
-      { "name": "City A2" },
-      { "name": "City A3" }
+      { "name": "Alba Iulia" },
+      { "name": "Sebes" },
+      { "name": "Blaj" }
     ]
   },
   {
     "id": 2,
-    "county": "County B",
-    "cities": [
-      { "name": "City B1" },
-      { "name": "City B2" },
-      { "name": "City B3" }
-    ]
+    "county": "Arad",
+    "cities": [{ "name": "Arad" }, { "name": "Ineu" }, { "name": "Lipova" }]
   },
   {
     "id": 3,
-    "county": "County C",
+    "county": "Arges",
     "cities": [
-      { "name": "City C1" },
-      { "name": "City C2" },
-      { "name": "City C3" }
+      { "name": "Pitesti" },
+      { "name": "Campulung" },
+      { "name": "Curtea de Arges" }
     ]
   },
   {
     "id": 4,
-    "county": "County D",
+    "county": "Bacau",
     "cities": [
-      { "name": "City D1" },
-      { "name": "City D2" },
-      { "name": "City D3" }
+      { "name": "Bacau" },
+      { "name": "Onesti" },
+      { "name": "Moinesti" }
     ]
   },
   {
     "id": 5,
-    "county": "County F",
+    "county": "Bihor",
     "cities": [
-      { "name": "City F1" },
-      { "name": "City F2" },
-      { "name": "City F3" }
+      { "name": "Oradea" },
+      { "name": "Salonta" },
+      { "name": "Marghita" }
     ]
   },
   {
     "id": 6,
-    "county": "County G",
+    "county": "Bistrita-Nasaud",
     "cities": [
-      { "name": "City G1" },
-      { "name": "City G2" },
-      { "name": "City G3" }
+      { "name": "Bistrita" },
+      { "name": "Nasaud" },
+      { "name": "Beclean" }
+    ]
+  },
+  {
+    "id": 7,
+    "county": "Botosani",
+    "cities": [
+      { "name": "Botosani" },
+      { "name": "Dorohoi" },
+      { "name": "Darabani" }
     ]
   }
 ]

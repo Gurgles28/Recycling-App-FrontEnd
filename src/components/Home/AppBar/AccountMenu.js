@@ -9,9 +9,11 @@ import { AuthData } from "../../Routes&Navigation/AuthWrapper";
 import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import { useState } from "react";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -20,6 +22,7 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
   const { loggedUserRole, user, logout, loggedUserPoints } = AuthData();
+  const [points, setPoints] = useState(loggedUserPoints);
 
   return (
     <React.Fragment>
@@ -78,13 +81,14 @@ export default function AccountMenu() {
         </MenuItem>
         <MenuItem key={loggedUserRole} onClick={handleClose}>
           Role:
-          {loggedUserRole.map((child) =>
-            child.props.children === "admin" ? loggedUserRole : "client"
-          )}
+          {loggedUserRole &&
+            loggedUserRole.map((role) =>
+              role === "admin" ? "admin" : "client"
+            )}
         </MenuItem>
-        <MenuItem key={loggedUserPoints} onClick={handleClose}>
+        <MenuItem key={points} onClick={handleClose}>
           Points:
-          {loggedUserPoints}
+          {points}
         </MenuItem>
         <Divider />
 

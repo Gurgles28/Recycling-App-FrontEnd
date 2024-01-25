@@ -49,6 +49,7 @@ export const AuthWrapper = () => {
   };
 
   const [allUsers, setAllUsers] = useState([]);
+  const [loggedUserPoints, setLoggedUserPoints] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/users/getAll", { method: "POST" })
@@ -61,6 +62,7 @@ export const AuthWrapper = () => {
       .then((result) => {
         if (Array.isArray(result) && result.length > 0 && result[0].email) {
           setAllUsers(result);
+          setLoggedUserPoints(result.map((user) => user.points));
         } else {
           console.error("Invalid data format:", result);
         }
@@ -97,10 +99,6 @@ export const AuthWrapper = () => {
     <p>{loggeduser.role}</p>
   ));
 
-  const loggedUserPoints = loggedUser.map((loggeduser) => (
-    <p>{loggeduser.points}</p>
-  ));
-
   return (
     <AuthContext.Provider
       value={{
@@ -109,7 +107,9 @@ export const AuthWrapper = () => {
         logout,
         loggedUserRole,
         loggedUserPoints,
+        setLoggedUserPoints,
         allCenters,
+        setAllCenters,
       }}
     >
       <>

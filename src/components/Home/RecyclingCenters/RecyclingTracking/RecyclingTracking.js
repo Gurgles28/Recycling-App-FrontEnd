@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthData } from "../../../Routes&Navigation/AuthWrapper";
 import axios from "axios";
 import Table from "@mui/material/Table";
@@ -19,13 +19,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RecyclingTracking = () => {
-  const { user } = AuthData();
+  const { user, setLoggedUserPoints } = AuthData();
   const location = useLocation();
   const { tableRowMats } = location.state;
   const materialsArray = tableRowMats ? tableRowMats.split(", ") : [];
+  const navigate = useNavigate();
 
   const materialPointValues = {
     Plastic: 5,
@@ -101,10 +102,14 @@ const RecyclingTracking = () => {
           }
         );
       }
+      setLoggedUserPoints(
+        (prevPoints) => Math.round((prevPoints + overallPoints) * 10) / 10
+      );
       alert("Material Contribution Updated");
     } catch (error) {
       alert("Invalid Input. Numbers-Only");
     }
+    navigate("/RecyclingCenters");
   };
 
   const [contribMaterials, setContribMaterials] = useState({});

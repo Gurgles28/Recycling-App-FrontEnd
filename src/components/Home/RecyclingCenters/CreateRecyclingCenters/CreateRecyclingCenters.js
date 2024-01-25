@@ -14,6 +14,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { AuthData } from "../../../Routes&Navigation/AuthWrapper";
+import { useNavigate } from "react-router-dom";
 
 const CreateRecyclingCenters = () => {
   const [county, setCounty] = useState("");
@@ -22,6 +24,8 @@ const CreateRecyclingCenters = () => {
   const [name, setName] = useState("");
   const [hours, setHours] = useState("");
   const [materialName, setMaterialName] = useState([]);
+  const { setAllCenters } = AuthData();
+  const navigate = useNavigate();
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -48,7 +52,6 @@ const CreateRecyclingCenters = () => {
       target: { value },
     } = event;
     setMaterialName(typeof value === "string" ? value.split(",") : value);
-    console.log("Material Name: ", materialName);
   };
 
   const materials = materialName.join(", ");
@@ -56,19 +59,23 @@ const CreateRecyclingCenters = () => {
   async function saveCenter(event) {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/v1/centers/saveCenter", {
-        centerAddress: address,
-        city: city,
-        county: county,
-        hours: hours,
-        materials: materials,
-        name: name,
-      });
-
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/centers/saveCenter",
+        {
+          centerAddress: address,
+          city: city,
+          county: county,
+          hours: hours,
+          materials: materials,
+          name: name,
+        }
+      );
+      setAllCenters((prevCenters) => [...prevCenters, response.data]);
       alert("Center Created Successfully");
     } catch (err) {
       alert(err);
     }
+    navigate("/RecyclingCenters");
   }
 
   return (
