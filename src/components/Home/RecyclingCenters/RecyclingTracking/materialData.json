@@ -1,0 +1,26 @@
+{
+  "Plastic": {
+    "energySavings": 500,
+    "impactReduction": 0.2
+  },
+  "Aluminum": {
+    "energySavings": 800,
+    "impactReduction": 0.3
+  },
+  "Metal": {
+    "energySavings": 600,
+    "impactReduction": 0.25
+  },
+  "Glass": {
+    "energySavings": 700,
+    "impactReduction": 0.15
+  },
+  "Paper & Cardboard": {
+    "energySavings": 400,
+    "impactReduction": 0.1
+  },
+  "Electronic Waste": {
+    "energySavings": 1200,
+    "impactReduction": 0.35
+  }
+}

@@ -20,6 +20,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
+import materialData from "./materialData.json";
 
 const RecyclingTracking = () => {
   const { user, setLoggedUserPoints } = AuthData();
@@ -84,7 +85,7 @@ const RecyclingTracking = () => {
       );
 
       alert(response.data);
-      console.log(materialStates);
+
       for (const materialState of materialStates) {
         await axios.post(
           "http://localhost:8080/api/v1/users/updateContribPoints",
@@ -102,9 +103,11 @@ const RecyclingTracking = () => {
           }
         );
       }
+
       setLoggedUserPoints(
         (prevPoints) => Math.round((prevPoints + overallPoints) * 10) / 10
       );
+
       alert("Material Contribution Updated");
     } catch (error) {
       alert("Invalid Input. Numbers-Only");
@@ -128,6 +131,19 @@ const RecyclingTracking = () => {
         console.error("Error fetching contribution materials:", error);
       });
   }, [user.email]);
+
+  const environmentalImpacts = materialStates.map((materialState) => {
+    const { energySavings, impactReduction } =
+      materialData[materialState.material];
+    return (
+      ((contribMaterials[materialState.material] /
+        materialPointValues[materialState.material] /
+        10) *
+        energySavings *
+        impactReduction) /
+      10
+    );
+  });
 
   return (
     <div>
@@ -243,7 +259,7 @@ const RecyclingTracking = () => {
             <TableHead>
               <TableRow>
                 {materialStates.map((item) => (
-                  <TableCell>{item.material} Environmantal Impact</TableCell>
+                  <TableCell>{item.material} Environmental Impact</TableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -251,9 +267,13 @@ const RecyclingTracking = () => {
               <TableRow
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {materialStates.map(() => (
-                  <TableCell component="th" scope="row">
-                    Environmantal Impact
+                {materialStates.map((materialState, index) => (
+                  <TableCell
+                    key={materialState.material}
+                    component="th"
+                    scope="row"
+                  >
+                    {environmentalImpacts[index]} (arbitrary unit)
                   </TableCell>
                 ))}
               </TableRow>
