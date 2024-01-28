@@ -9,6 +9,7 @@ import { AuthData } from "../../Routes&Navigation/AuthWrapper";
 import { Link } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import VoucherDownloadButton from "./Voucher/VoucherDownloadButton";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,6 +99,7 @@ export default function AccountMenu() {
             </MenuItem>
           ) : null
         )}
+        {loggedUserPoints[0] <= 2000 ? <VoucherDownloadButton /> : null}
         <MenuItem onClick={logout}>
           <Link to="http://localhost:3000/login">
             <Button variant="text" color="error">

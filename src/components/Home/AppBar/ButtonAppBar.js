@@ -22,6 +22,7 @@ export default function ButtonAppBar() {
               Recycling Centers
             </Button>
           </Link>
+
           <AccountMenu />
         </Toolbar>
       </AppBar>
