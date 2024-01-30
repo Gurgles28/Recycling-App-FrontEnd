@@ -4,6 +4,7 @@ import Login from "../Login/Login";
 import RecyclingCenters from "../Home/RecyclingCenters/RecyclingCenters";
 import CreateRecyclingCenters from "../Home/RecyclingCenters/CreateRecyclingCenters/CreateRecyclingCenters";
 import RecyclingTracking from "../Home/RecyclingCenters/RecyclingTracking/RecyclingTracking";
+import LearningMaterials from "../Home/LearningMaterials/LearningMaterials";
 
 export const nav = [
   {
@@ -40,6 +41,12 @@ export const nav = [
     path: "/RecyclingTracking",
     name: "RecyclingTracking",
     element: <RecyclingTracking />,
+    isPrivate: true,
+  },
+  {
+    path: "/LearningMaterials",
+    name: "LearningMaterials",
+    element: <LearningMaterials />,
     isPrivate: true,
   },
 ];

@@ -19,7 +19,7 @@ export default function ButtonAppBar() {
           <Link className="link" to="http://localhost:3000/RecyclingCenters">
             <Button color="inherit">Recycling Centers</Button>
           </Link>
-          <Link className="link" to="http://localhost:3000/RecyclingCenters">
+          <Link className="link" to="http://localhost:3000/LearningMaterials">
             <Button color="inherit">Learning Materials</Button>
           </Link>
 
