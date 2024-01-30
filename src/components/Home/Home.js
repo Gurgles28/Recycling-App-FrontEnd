@@ -4,10 +4,14 @@ import "./Home.css";
 
 function Home() {
   return (
-    <div>
+    <div className="home">
       <ButtonAppBar />
-      <h1>Welcome to MSG Recycling App</h1>
+      <h1>WELCOME TO MSG RECYCLING APP</h1>
+      <p>
+        Start recycling today and make a positive impact on the environment!
+      </p>
     </div>
   );
 }
+
 export default Home;

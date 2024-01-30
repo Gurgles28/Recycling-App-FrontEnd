@@ -20,6 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
+import "./RecyclingCenters.css";
 
 function RecyclingCenters() {
   const { allCenters } = AuthData();
@@ -114,7 +115,9 @@ function RecyclingCenters() {
         }}
       >
         <FormControl sx={{ m: 1.5, width: 500 }}>
-          <InputLabel id="demo-multiple-checkbox-label">Materials</InputLabel>
+          <InputLabel id="demo-multiple-checkbox-label" color="error">
+            Materials
+          </InputLabel>
           <Select
             labelId="demo-multiple-checkbox-label"
             id="demo-multiple-checkbox"
@@ -124,6 +127,7 @@ function RecyclingCenters() {
             input={<OutlinedInput label="Tag" />}
             renderValue={(selected) => selected.join(", ")}
             MenuProps={MenuProps}
+            color="error"
           >
             {materialsForm.map((name) => (
               <MenuItem key={name} value={name}>

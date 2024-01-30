@@ -21,13 +21,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import materialData from "./materialData.json";
+import "./RecyclingTracking.css";
 
 const RecyclingTracking = () => {
-  const { user, setLoggedUserPoints } = AuthData();
+  const { user, setLoggedUserPoints, loggedUserPoints } = AuthData();
   const location = useLocation();
   const { tableRowMats } = location.state;
   const materialsArray = tableRowMats ? tableRowMats.split(", ") : [];
-  const navigate = useNavigate();
 
   const materialPointValues = {
     Plastic: 5,
@@ -105,15 +105,23 @@ const RecyclingTracking = () => {
       }
 
       setLoggedUserPoints(
-        (prevPoints) =>
-          Math.round((Number(prevPoints) + overallPoints) * 10) / 10
+        Math.round((loggedUserPoints + overallPoints) * 10) / 10
       );
+
+      await axios
+        .get("http://localhost:8080/api/v1/users/getContribMaterials", {
+          params: {
+            email: user.email,
+          },
+        })
+        .then((response) => {
+          setContribMaterials(response.data);
+        });
 
       alert("Material Contribution Updated");
     } catch (error) {
       alert("Invalid Input. Numbers-Only");
     }
-    navigate("/RecyclingCenters");
   };
 
   const [contribMaterials, setContribMaterials] = useState({});
@@ -146,6 +154,7 @@ const RecyclingTracking = () => {
     );
   });
 
+  console.log(loggedUserPoints);
   return (
     <div>
       <ButtonAppBar />

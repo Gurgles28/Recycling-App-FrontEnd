@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { AuthData } from "../../../Routes&Navigation/AuthWrapper";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-const VoucherDownloadButton = () => {
-  const { user, setLoggedUserPoints } = AuthData();
-  const [downloadError, setDownloadError] = useState(null);
+const VoucherDownloadButton = ({ resetCount }) => {
+  const { user, setLoggedUserPoints, loggedUserPoints } = AuthData();
 
   const handleDownload = async () => {
     try {
@@ -24,16 +23,16 @@ const VoucherDownloadButton = () => {
         const blob = new Blob([response.data], { type: "application/pdf" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
+
         a.href = url;
         a.download = "voucher.pdf";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-        setDownloadError(null);
-        setLoggedUserPoints((prevPoints) =>
-          Math.round(Number(prevPoints) - 2000)
-        );
+
+        setLoggedUserPoints(Math.round(loggedUserPoints - 2000));
+
         await axios.post(
           "http://localhost:8080/api/v1/users/deductPoints",
           null,
@@ -43,12 +42,13 @@ const VoucherDownloadButton = () => {
             },
           }
         );
+
+        resetCount();
       } else {
-        setDownloadError("Failed to download voucher");
+        alert("Failed to download voucher");
       }
     } catch (error) {
       console.error("Error during download", error);
-      setDownloadError("Error during download");
     }
   };
 
@@ -59,7 +59,6 @@ const VoucherDownloadButton = () => {
           Download Voucher
         </Button>
       </MenuItem>
-      {downloadError && <p style={{ color: "red" }}>{downloadError}</p>}
     </div>
   );
 };

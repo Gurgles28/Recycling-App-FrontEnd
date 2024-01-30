@@ -9,7 +9,7 @@
 }
 
 .text {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Gill Sans", sans-serif;
   color: #900000;
   font-size: 48px;
   font-weight: 700;
@@ -78,7 +78,7 @@
 }
 
 .linkLogin {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Gill Sans", sans-serif;
   font-size: 48px;
   font-weight: 700;
   align-items: center;

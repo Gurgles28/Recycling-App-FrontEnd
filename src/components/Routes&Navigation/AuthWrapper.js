@@ -62,7 +62,6 @@ export const AuthWrapper = () => {
       .then((result) => {
         if (Array.isArray(result) && result.length > 0 && result[0].email) {
           setAllUsers(result);
-          setLoggedUserPoints(result.map((user) => user.points));
         } else {
           console.error("Invalid data format:", result);
         }
@@ -91,6 +90,17 @@ export const AuthWrapper = () => {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/v1/users/getPoints?email=${user.email}`)
+      .then((res) => {
+        setLoggedUserPoints(res.data || 0);
+      })
+      .catch((error) => {
+        console.error("Error fetching user points:", error);
+      });
+  }, [user.email]);
+
   const loggedUser = allUsers.filter(
     (allusers) => allusers.email === user.email
   );
@@ -105,6 +115,7 @@ export const AuthWrapper = () => {
         user,
         login,
         logout,
+        loggedUser,
         loggedUserRole,
         loggedUserPoints,
         setLoggedUserPoints,

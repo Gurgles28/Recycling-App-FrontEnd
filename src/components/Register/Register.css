@@ -25,7 +25,7 @@
 }
 
 .text {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Gill Sans", sans-serif;
   color: #900000;
   font-size: 48px;
   font-weight: 700;
@@ -83,8 +83,8 @@
   color: #fff;
   background: #900000;
   border-radius: 50px;
-  font-size: 19px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 300;
   cursor: pointer;
 }
 
