@@ -99,7 +99,7 @@ export default function AccountMenu() {
             </MenuItem>
           ) : null
         )}
-        {loggedUserPoints[0] <= 2000 ? <VoucherDownloadButton /> : null}
+        {loggedUserPoints >= 2000 ? <VoucherDownloadButton /> : null}
         <MenuItem onClick={logout}>
           <Link to="http://localhost:3000/login">
             <Button variant="text" color="error">

@@ -105,7 +105,8 @@ const RecyclingTracking = () => {
       }
 
       setLoggedUserPoints(
-        (prevPoints) => Math.round((prevPoints + overallPoints) * 10) / 10
+        (prevPoints) =>
+          Math.round((Number(prevPoints) + overallPoints) * 10) / 10
       );
 
       alert("Material Contribution Updated");

@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 
 const VoucherDownloadButton = () => {
-  const { user } = AuthData();
+  const { user, setLoggedUserPoints } = AuthData();
   const [downloadError, setDownloadError] = useState(null);
 
   const handleDownload = async () => {
@@ -31,6 +31,18 @@ const VoucherDownloadButton = () => {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
         setDownloadError(null);
+        setLoggedUserPoints((prevPoints) =>
+          Math.round(Number(prevPoints) - 2000)
+        );
+        await axios.post(
+          "http://localhost:8080/api/v1/users/deductPoints",
+          null,
+          {
+            params: {
+              email: user.email,
+            },
+          }
+        );
       } else {
         setDownloadError("Failed to download voucher");
       }

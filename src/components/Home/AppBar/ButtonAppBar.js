@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import "./ButtonAppBar.css";
 import { Link } from "react-router-dom";
 import AccountMenu from "./AccountMenu";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function ButtonAppBar() {
   return (
@@ -13,14 +14,13 @@ export default function ButtonAppBar() {
       <AppBar color="error" position="static">
         <Toolbar>
           <Link className="link" to="http://localhost:3000/home">
-            <Button variant="contained" color="error">
-              Home
-            </Button>
+            <HomeIcon fontSize="large" />
           </Link>
           <Link className="link" to="http://localhost:3000/RecyclingCenters">
-            <Button variant="outlined" color="inherit">
-              Recycling Centers
-            </Button>
+            <Button color="inherit">Recycling Centers</Button>
+          </Link>
+          <Link className="link" to="http://localhost:3000/RecyclingCenters">
+            <Button color="inherit">Learning Materials</Button>
           </Link>
 
           <AccountMenu />
