@@ -28,7 +28,7 @@ function Register() {
         });
       alert("User Registration Successfully");
     } catch (err) {
-      alert(err);
+      alert("Invalid Email or Incompleted Fields");
     }
   }
 
